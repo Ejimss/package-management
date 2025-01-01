@@ -1,4 +1,5 @@
 #!/bin/bash
+
 #i1) Switch to root user [ sudo -i]
 
 sudo hostnamectl set-hostname  node1
@@ -71,15 +72,15 @@ systemctl enable containerd
 # Update the apt package index and install packages needed to use the Kubernetes apt repository:
 
 apt-get update
-apt-get install -y apt-transport-https ca-certificates curl
+sudo apt-get install -y apt-transport-https ca-certificates curl gnupg
 
-# Download the Google Cloud public signing key:
+#Download the Google Cloud public signing key:
 
-curl -fsSLo /etc/apt/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
+curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
 
 # Add the Kubernetes apt repository:
 
-echo "deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.32/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
 
 # Update apt package index, install kubelet, kubeadm and kubectl, and pin their version:
 
@@ -97,7 +98,7 @@ systemctl start kubelet
 systemctl enable kubelet.service
 
 # initialise the control plane
-kubeadm init 
+
+kubeadm init
 
 su - ubuntu
-~
