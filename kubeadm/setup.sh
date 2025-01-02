@@ -235,5 +235,11 @@ mv ./kubectl ~/.local/bin/kubectl
 kubectl version --client
 
 
+====================================================================================
+# create a .kube directory and create a config file
+# copy the content of the .kube/config in the master node and paste in the .kube/config of this manager
+# you can manage the master node using this manager node
+
+
 
 
